@@ -61,7 +61,7 @@ model = Sequential(
     Dropout(p=0.5),
     Linear(32 * 7 * 7, 1)
 )
-optimizer = Adam(model, lr=LEARNING_RATE)
+optimizer = Adam(model, lr=0.001)
 
 print(f"\n>> Training:")
 for epoch in range(1, NUM_EPOCHS + 1):
