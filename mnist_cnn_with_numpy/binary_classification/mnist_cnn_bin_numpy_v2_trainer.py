@@ -60,7 +60,7 @@ model = Sequential(
     MaxPool2d(kernel_size=2, stride=2),                 # (N, 32, 7, 7)
     Flatten(),
     Dropout(p=0.5),
-    Linear(32 * 7 * 7, 10)
+    Linear(32 * 7 * 7, 1)
 )
 optimizer = Adam(model, lr=0.001)
 clf = BinaryClassifier(model, optimizer)
