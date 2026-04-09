@@ -62,7 +62,7 @@ model = Sequential(
     Dropout(p=0.5),
     Linear(32 * 7 * 7, 10)
 )
-optimizer = Adam(model, lr=LEARNING_RATE)
+optimizer = Adam(model, lr=0.001)
 clf = BinaryClassifier(model, optimizer)
 
 print(f"\n>> Training:")
