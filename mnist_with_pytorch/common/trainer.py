@@ -8,14 +8,20 @@ def accuracy(preds, targets):
     return (preds.argmax(dim=1) == targets).float().mean()
 
 
-class MulticlassClassifier(nn.Module):
+class MulticlassClassifier:
     def __init__(self, model, optimizer, device=None):
-        super().__init__()
         self.device = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = model.to(self.device)
         self.optimizer = optimizer
 
+    def train(self):
+        self.model.train()
+        
+    def eval(self):
+        self.model.eval()
+
     def train_step(self, x, y):
+        self.train()
         x, y = x.to(self.device), y.to(self.device)
         logits = self.model(x)
         loss = F.cross_entropy(logits, y)
@@ -29,6 +35,7 @@ class MulticlassClassifier(nn.Module):
 
     @torch.no_grad()
     def eval_step(self, x, y):
+        self.eval()
         x, y = x.to(self.device), y.to(self.device)
         logits = self.model(x)
         loss = F.cross_entropy(logits, y)
@@ -38,6 +45,7 @@ class MulticlassClassifier(nn.Module):
 
     @torch.no_grad()
     def predict(self, x):
+        self.eval()
         x = x.to(self.device)
         logits = self.model(x)
         preds = torch.softmax(logits, dim=1)
